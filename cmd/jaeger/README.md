@@ -36,8 +36,16 @@ flowchart LR
 
 * Download `docker-compose.yml` from https://github.com/jaegertracing/jaeger/blob/main/examples/hotrod/docker-compose.yml, e.g.:
   * `curl -O https://raw.githubusercontent.com/jaegertracing/jaeger/refs/heads/main/examples/hotrod/docker-compose.yml`
-* Optional: find the latest images versions (see https://www.jaegertracing.io/download/) and pass them via environment variables `JAEGER_VERSION` and `HOTROD_VERSION`. Otherwise `docker compose` will use the `latest` tag, which is fine for the first time you download the images, but once they are in your local registry the `latest` tag is never updated and you may be running stale (and possibly incompatible) verions of Jaeger and the HotROD app.
+* Optional: find the latest images versions (see https://www.jaegertracing.io/download/) and pass them via environment variables `JAEGER_VERSION` and `HOTROD_VERSION`. Otherwise `docker compose` will use the `latest` tag, which is fine for the first time you download the images, but once they are in your local registry the `latest` tag is never updated and you may be running stale (and possibly incompatible) versions of Jaeger and the HotROD app.
 * Run Jaeger backend and HotROD demo, e.g.:
   * `JAEGER_VERSION=2.0.0 HOTROD_VERSION=1.63.0 docker compose -f docker-compose.yml up`
 * Access Jaeger UI at http://localhost:16686 and HotROD app at http://localhost:8080
 * Shutdown / cleanup with `docker compose -f docker-compose.yml down`
+
+## Jaeger Query V2 Configuration
+
+This configuration uses the `nop` receiver and exporter to create a dummy pipeline for Jaeger Query V2.
+
+### Configuration File
+
+Create a new file named `config-query-v2.yaml` in the `cmd/jaeger/` directory with the required content. This configuration sets up a Jaeger Query service using a dummy pipeline with `nop` receiver and exporter. The telemetry section specifies the service name and metrics configuration.
